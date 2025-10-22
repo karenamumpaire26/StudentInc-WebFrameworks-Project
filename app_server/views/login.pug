@@ -1,16 +1,24 @@
+
 extends layout
 
 block content
-  h1 Login
-  if error
-    p(style="color:red") #{error}
-  form(method="POST" action="/login")
-    label(for="email") Email
-    input(type="email" name="email" required)
-    br
-    label(for="password") Password
-    input(type="password" name="password" required)
-    br
-    button(type="submit") Login
+  h1 Student Login
+
+  form(action='/login', method='POST')
+    fieldset
+      legend Login to Your Account
+
+      .form-group
+        label(for='tNumber') T Number or Email:
+        input(type='text', id='tNumber', name='tNumber', placeholder='T12345678 or email@example.com', required)
+
+      .form-group
+        label(for='password') Password:
+        input(type='password', id='password', name='password', required)
+
+      .form-group
+        button(type='submit') Login
+
   p
-    a(href="/register") Don't have an account? Register
+    | Don’t have an account?
+    a(href='/register') Register here

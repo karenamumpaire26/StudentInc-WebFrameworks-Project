@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const ctrlUsers = require('../controllers/users'); 
 
-// Display register and login forms
-router.get('/register', ctrlUsers.registerForm);
-router.get('/login', ctrlUsers.loginForm);
+const studentController = require('../controllers/users');  
+
+router.get('/register', studentController.registerForm);
+router.post('/register', studentController.registerStudent);
+
+router.get('/login', studentController.loginForm);
 
 module.exports = router;

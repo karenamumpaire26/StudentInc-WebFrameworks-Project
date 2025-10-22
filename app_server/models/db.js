@@ -1,44 +1,19 @@
-//const mongoose = require('mongoose');
-//let dbURI = 'mongodb://127.0.0.1:27017/studentinc';
-//if (process.env.NODE_ENV === 'production') {
-//  dbURI = process.env.MONGODB_URI;
-//}
-//mongoose.connect(dbURI);
+const mongoose = require('mongoose');
 
-//mongoose.connection.on('connected', () => {
- // console.log(`Mongoose connected to ${dbURI}`);
-//});
-//mongoose.connection.on('error', err => {
-//  console.log('Mongoose connection error:', err);
-//});
-//mongoose.connection.on('disconnected', () => {
-//  console.log('Mongoose disconnected');
-//});
+const dbURI = 'mongodb+srv://karen:<db_password>@cluster0.czyz7de.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
-//const gracefulShutdown = (msg, callback) => {
-//  mongoose.connection.close( () => {
-//    console.log(`Mongoose disconnected through ${msg}`);
-//    callback();
- // });
-//};
+mongoose.connect(dbURI)
+  .then(() => console.log('Mongoose connected to ' + dbURI))
+  .catch(err => console.log('Mongoose connection error: ' + err));
 
-// For nodemon restarts                                 
-process.once('SIGUSR2', () => {
-  gracefulShutdown('nodemon restart', () => {
-    process.kill(process.pid, 'SIGUSR2');
-  });
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose disconnected');
 });
-// For app termination
+
+// Optional: graceful shutdown
 process.on('SIGINT', () => {
-  gracefulShutdown('app termination', () => {
+  mongoose.connection.close(() => {
+    console.log('Mongoose disconnected through app termination');
     process.exit(0);
   });
 });
-// For Heroku app termination
-process.on('SIGTERM', () => {
-  gracefulShutdown('Heroku app shutdown', () => {
-    process.exit(0);
-  });
-});
-
-require('./locations');
