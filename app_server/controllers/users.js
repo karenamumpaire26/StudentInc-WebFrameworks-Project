@@ -1,4 +1,4 @@
-const Student = require('../models/student');
+const Student = require('../../app_api/models/student');
 
 const registerForm = (req, res) => {
   res.render('register', { title: 'Register' });
